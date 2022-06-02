@@ -34,16 +34,13 @@ bool wildcardMatches(const char * wildcard, const char * str, int debugDepth = 0
 
     const size_t strLen = strlen(str);
     const char * remainingWildcard = wildcardPos + 1;
-    const size_t remainingWildcardLen = strlen(remainingWildcard);
-
-    size_t skipCount = remainingWildcardLen;
+    size_t skipCount = 0;
     for (const char * p = remainingWildcard; *p; ++p) {
-        if (*p == '*') {
+        if (*p != '*') {
             // Don't count '*', they are zero-width
-            --skipCount;
+            ++skipCount;
         }
     }
-
     if (skipCount > strLen) {
         return false;
     }
